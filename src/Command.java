@@ -8,10 +8,10 @@ public class Command{
     private Map<String, String> account_map = new HashMap<>();
     private String account;
     private String password;
-    private Data_Menu Data;
+    private Data_Menu Data_M;
 
     public Command() throws IOException {
-        Data = new Data_Menu();
+        Data_M = new Data_Menu();
         BufferedReader br = new BufferedReader(new FileReader(ACCOUNT_PATH));
         String line;
         while ((line = br.readLine()) != null) {
@@ -62,16 +62,16 @@ public class Command{
     }
 
     private void save(){
-        Data.save_data();
+        Data_M.save_data();
     }
 
     private void change_upper(String s){
         try{
             if(s.equals("unlimited")){
-                Data.setUnlimited(true);
+                Data_M.setUnlimited(true);
             }else {
                 int u = Integer.parseInt(s);
-                if(u<Data.getLength()){
+                if(u< Data_M.getLength()){
                     System.out.println(s + " can not lower than current data size");
                 }
             }
