@@ -5,12 +5,14 @@ import java.util.List;
 
 public class Control {
     protected int upper_bound;
+    protected boolean unlimited;
     protected List<Data> DataL = new ArrayList<>();
     protected int length;
 
     public Control(){
         length=0;
         upper_bound = 128;
+        unlimited = false;
     }
 
     protected void print(int i){
@@ -61,11 +63,17 @@ public class Control {
     }
 
     protected void append(String name){
-        if(length>upper_bound){
-            System.out.println("data full");
+        if(!unlimited){
+            if(length>upper_bound){
+                System.out.println("data full");
+                return;
+            }
+            DataL.add(new Data(name));
+            length++;
+        }else{
+            DataL.add(new Data(name));
+            length++;
         }
-        DataL.add(new Data(name));
-        length++;
     }
 
     protected void save(String path) throws IOException{
@@ -123,5 +131,13 @@ public class Control {
         if(!trend){
             Collections.reverse(DataL);
         }
+    }
+
+    public void setUnlimited(boolean b){
+        unlimited = b;
+    }
+
+    public int getLength(){
+        return length;
     }
 }
