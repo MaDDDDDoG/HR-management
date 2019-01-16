@@ -30,7 +30,6 @@ public class Inspect {
     }
 
     public static boolean name_form(String s) {
-        if(s.equals("")){return true;}
         for(int i=0;i<s.length();i++) {
             if(!('a'<=s.charAt(i)&&s.charAt(i)<='z'||'A'<=s.charAt(i)&&s.charAt(i)<='Z'||s.charAt(i)==' ')){
                 return false;
@@ -82,6 +81,6 @@ public class Inspect {
     }
 
     public static void error_message(String s, String type){
-        System.out.println(s + " is invalid" + type + " form.");
+        System.out.println(s + " is invalid " + type + " form");
     }
 }

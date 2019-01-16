@@ -2,14 +2,17 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class Control {
     protected int upper_bound;
     protected boolean unlimited;
     protected List<Data> DataL = new ArrayList<>();
     protected int length;
+    protected Scanner keyboard;
 
     public Control(){
+        keyboard = new Scanner(System.in);
         length=0;
         upper_bound = 128;
         unlimited = false;
@@ -91,22 +94,17 @@ public class Control {
         bufw.close();
     }
 
-    protected void print_type(String type){
+    protected void print_type(String type, int i){
         if(type.equals("name")){
-            for(int i=0;i<length;i++)
-                System.out.println(DataL.get(i).getName());
+            System.out.println("Name: " + DataL.get(i).getName());
         }else if(type.equals("phone")){
-            for(int i=0;i<length;i++)
-                System.out.println(DataL.get(i).getPhone());
+            System.out.println("Phone" + DataL.get(i).getPhone());
         }else if(type.equals("category")){
-            for(int i=0;i<length;i++)
-                System.out.println(DataL.get(i).getCategory());
+            System.out.println("Category: " + DataL.get(i).getCategory());
         }else if(type.equals("e-mail")){
-            for(int i=0;i<length;i++)
-                System.out.println(DataL.get(i).getEmail());
+            System.out.println("E-mail: " + DataL.get(i).getEmail());
         }else if(type.equals("birthday")){
-            for(int i=0;i<length;i++)
-                System.out.println(DataL.get(i).getBirthday());
+            System.out.println("Birthday: " + DataL.get(i).getBirthday());
         }else{
             System.out.println(type + " is not type");
         }
@@ -131,13 +129,5 @@ public class Control {
         if(!trend){
             Collections.reverse(DataL);
         }
-    }
-
-    public void setUnlimited(boolean b){
-        unlimited = b;
-    }
-
-    public int getLength(){
-        return length;
     }
 }

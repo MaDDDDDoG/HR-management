@@ -1,4 +1,7 @@
 BBB bb,(00)1234567,BBB,bbb@ggg.nnn,0102
 CCC cc,(000)1234567,CCC,ccc@ggg.nnn,0103
 AAA aa,1234567,AAA,aaa@ggg.nnn,0101
-SSS ss,7777777,,sss@sss.ss,1111
+SSS ss,7777777,das,sss@sss.ss,1111
+ZZZ xx,7777777,ads,aaa@ggg.nnn,0202
+xxx,7777777,asd,aaa@ggg.nnn,0303
+aaaa,1234567,asd,sss@aaa.ccc,1010

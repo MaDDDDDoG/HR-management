@@ -1,23 +1,59 @@
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Command{
+public class Command extends Data_Menu{
     private String ACCOUNT_PATH = new File("").getAbsolutePath() + "/src/account.csv";
     private Map<String, String> account_map = new HashMap<>();
     private String account;
     private String password;
-    private Data_Menu Data_M;
 
     public Command() throws IOException {
-        Data_M = new Data_Menu();
         BufferedReader br = new BufferedReader(new FileReader(ACCOUNT_PATH));
         String line;
         while ((line = br.readLine()) != null) {
             if(line.equals("")){continue;}
             String[] temp = line.split(",");
             account_map.put(temp[0], temp[1]);
+        }
+    }
+
+    public void process(String command){
+        if(command.equals("data")){
+            System.out.println("---------------------");
+            System.out.println("| Data Control Menu |");
+            System.out.println("---------------------");
+            while(true){
+                System.out.print("---");
+                String s = keyboard.nextLine();
+                if(data_process(s)){
+                    break;
+                }
+            }
+        }else if(command.equals("save")){
+            save_(DATA_PATH);
+        }else if(command.indexOf("upper")==0){
+            String operand = command.substring(6);
+            change_upper(operand);
+        }else if(command.equals("change password")){
+            change_password();
+        }else if(command.equals("new account")){
+            new_account();
+        }else if(command.indexOf("?")==0){
+            String operand = command.substring(1);
+            System.out.println(explain(operand));
+        }else if(command.indexOf("export")==0){
+            String operand = command.substring(7);
+            export(operand);
+        }else if(command.equals("time")){
+            Date dNow = new Date( );
+            SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+            System.out.println(ft.format(dNow));
+        }else{
+            System.out.println("command not found");
         }
     }
 
@@ -46,33 +82,21 @@ public class Command{
         }
     }
 
-    public void process(String command){
-        if(command.equals("save")){
-            save();
-        }else if(command.indexOf("upper")==0){
-            String operand = command.substring(6);
-            change_upper(operand);
-        }else if(command.equals("change password")){
-            change_password();
-        }else if(command.equals("new account")){
-            new_account();
-        }else{
-            System.out.println("command not found");
-        }
-    }
-
-    private void save(){
-        Data_M.save_data();
+    private void save_(String path){
+        save_data(path);
     }
 
     private void change_upper(String s){
         try{
             if(s.equals("unlimited")){
-                Data_M.setUnlimited(true);
+                unlimited = true;
             }else {
                 int u = Integer.parseInt(s);
-                if(u< Data_M.getLength()){
+                if(u<length){
                     System.out.println(s + " can not lower than current data size");
+                }else{
+                    upper_bound = u;
+                    unlimited = false;
                 }
             }
         }catch (NumberFormatException e){
@@ -105,5 +129,36 @@ public class Command{
         System.out.print("New Password:");
         String new_p = sc.nextLine();
         account_map.put(new_a, new_p);
+    }
+
+    private String explain(String s){
+        if(s.equals("upper")){
+            return "upper A, A=integer which can't lower than current data size or \"unlimited\"";
+        }else if(s.equals("change password")){
+            return "change current password";
+        }else if(s.equals("new account")){
+            return "append a new account";
+        }else if(s.equals("save")){
+            return "save data";
+        }else if(s.equals("logout")) {
+            return "exit system";
+        }else if(s.equals("time")){
+            return "now time";
+        }else if(s.equals("export")){
+            return "export A, A=target path, export data copy.";
+        }else {
+            return s + " command not found";
+        }
+    }
+
+    private void export(String path){
+        File f = new File(path, "export.csv");
+        try {
+            if(!f.exists())
+                f.createNewFile();
+            save_data(path+"\\export.csv");
+        }catch (IOException e){
+            System.out.println("1file error");
+        }
     }
 }
